@@ -225,7 +225,7 @@ const translations = {
   ja: {
     localBadge: '写真は端末の中だけで処理',
     headline: '思い出を、好きなかたちに。',
-    description: 'お気に入りの写真を、好きなかたちに。\n手帳やスクラップブックをもっと楽しく。',
+    description: '写真をかわいく切り抜いて、\n手帳やスクラップブックをもっと楽しく。',
     editorLabel: '写真の位置調整',
     transparentPng: '透過PNG',
     canvasLabel: '写真をドラッグで移動、2本指で拡大縮小',
