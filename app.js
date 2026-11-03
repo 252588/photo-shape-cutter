@@ -51,10 +51,17 @@ async function chooseShape(shape, button) {
     if (version !== shapeVersion) return;
     state.shape = shape; state.mask = mask;
     
-const width = shape.width || mask.naturalWidth;
-const height = shape.height || mask.naturalHeight;
-canvas.width = width; canvas.height = height;
+
+const originalWidth = shape.width || mask.naturalWidth;
+const originalHeight = shape.height || mask.naturalHeight;
+const scale = Math.min(1, 1200 / Math.max(originalWidth, originalHeight));
+const width = Math.round(originalWidth * scale);
+const height = Math.round(originalHeight * scale);
+
+canvas.width = width;
+canvas.height = height;
 $('canvasArea').style.aspectRatio = `${width}/${height}`;
+
 
     document.querySelectorAll('.shape-option').forEach(el => el.setAttribute('aria-pressed', String(el === button)));
     if (state.photo) { fit(); setEnabled(true); }
