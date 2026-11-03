@@ -141,3 +141,21 @@ dialog {
     max-height: 68dvh;
   }
 }
+
+
+/* シルエットの名前を非表示 */
+.shape-option span {
+  display: none;
+}
+
+/* 形を中央に配置 */
+.shape-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 6px;
+}
+
+.shape-option img {
+  margin: 0;
+}
