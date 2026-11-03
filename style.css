@@ -557,3 +557,29 @@ dialog .button {
     max-height: 68dvh;
   }
 }
+
+
+/* Compact welcome screen */
+@media (max-width: 700px) {
+  .canvas-area:has(#emptyState:not([hidden])) {
+    height: 200px;
+    aspect-ratio: auto !important;
+  }
+
+  .canvas-area:has(#emptyState:not([hidden])) canvas {
+    visibility: hidden;
+  }
+
+  .canvas-area:has(#emptyState:not([hidden])) .empty-state {
+    padding: 12px;
+  }
+
+  /* Balanced English headline */
+  html[lang="en"] .intro h1 {
+    max-width: 19ch;
+    margin: 8px auto;
+    font-size: 23px;
+    line-height: 1.4;
+    text-wrap: balance;
+  }
+}
