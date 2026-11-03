@@ -72,8 +72,10 @@ for (const shape of window.PHOTO_SHAPES) {
   const button = document.createElement('button'); button.className = 'shape-option';
   button.setAttribute('aria-pressed', 'false');
   const image = document.createElement('img'); image.src = shape.src; image.alt = '';
-  const label = document.createElement('span'); label.textContent = shape.name;
-  button.append(image, label); button.addEventListener('click', () => chooseShape(shape, button));
+ 
+button.setAttribute('aria-label', shape.name);
+button.append(image);
+button.addEventListener('click', () => chooseShape(shape, button));
   $('shapeList').append(button);
 }
 chooseShape(window.PHOTO_SHAPES[0], $('shapeList').firstElementChild);
