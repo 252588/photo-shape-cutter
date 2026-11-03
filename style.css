@@ -71,6 +71,68 @@ dialog {
     border-radius: 14px;
   }
 
+  
+/* スマホ向けレイアウト改善 */
+@media (max-width: 700px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  main {
+    width: 100%;
+    padding: 20px 14px 0;
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 460px;
+    gap: 22px;
+  }
+
+  .editor-panel, .controls {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .shape-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+
+  .shape-option {
+    min-width: 0;
+    width: 100%;
+    padding: 12px 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .shape-option img {
+    width: 38px;
+    height: 48px;
+    object-fit: contain;
+  }
+}
+
+/* 完成画像のプレビューを拡大 */
+dialog {
+  width: min(600px, calc(100% - 20px));
+  max-height: 94dvh;
+  padding: 16px;
+}
+
+.preview-checker img {
+  max-width: 100%;
+  height: auto;
+  max-height: 65dvh;
+  object-fit: contain;
+}
+
   .preview-checker {
     padding: 8px;
   }
