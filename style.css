@@ -599,3 +599,9 @@ dialog .button {
     text-wrap: balance;
   }
 }
+
+
+/* Keep description line breaks */
+.intro > p[data-i18n="description"] {
+  white-space: pre-line;
+}
