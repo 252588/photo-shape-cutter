@@ -66,7 +66,7 @@ $('canvasArea').style.aspectRatio = `${width}/${height}`;
     document.querySelectorAll('.shape-option').forEach(el => el.setAttribute('aria-pressed', String(el === button)));
     if (state.photo) { fit(); setEnabled(true); }
     render();
-  } catch { if (version === shapeVersion) status('シルエットを読み込めません。SVGのファイル名と場所を確認してください。'); }
+  } catch { if (version === shapeVersion)status(t('shapeError')); }
 }
 for (const shape of window.PHOTO_SHAPES) {
   const button = document.createElement('button'); button.className = 'shape-option';
@@ -81,7 +81,7 @@ button.addEventListener('click', () => chooseShape(shape, button));
 chooseShape(window.PHOTO_SHAPES[0], $('shapeList').firstElementChild);
 $('photoInput').addEventListener('change', async event => {
   const file = event.target.files[0]; if (!file) return;
-  const version = ++loadVersion; status('写真を読み込んでいます…');
+  const version = ++loadVersion; status(t('loading'));
   const url = URL.createObjectURL(file);
   try {
     const photo = await loadImage(url);
@@ -93,9 +93,9 @@ $('photoInput').addEventListener('change', async event => {
     working.getContext('2d').drawImage(photo, 0, 0, working.width, working.height);
     if (version !== loadVersion) return;
     state.photo = working; fit(); render();
-    $('emptyState').hidden = true; $('uploadLabel').textContent = '別の写真に変更する';
+    $('emptyState').hidden = true; $('uploadLabel').textContent = t('changePhoto');
     $('fileLabel').textContent = file.name; setEnabled(Boolean(state.mask));
-    status('写真をドラッグして位置を調整できます。');
+    status(t('loaded'));
   } catch (error) { if (version === loadVersion) status(error.message); }
   finally { URL.revokeObjectURL(url); event.target.value = ''; }
 });
@@ -140,7 +140,7 @@ $('reset').addEventListener('click', () => { fit(); render(); });
 for (const button of document.querySelectorAll('.nudge button')) button.addEventListener('click', () => { state.x += Number(button.dataset.dx); state.y += Number(button.dataset.dy); render(); });
 $('previewButton').addEventListener('click', async () => {
   if (!state.photo || !state.mask) return;
-  $('previewButton').disabled = true; status('透過PNGを作成しています…');
+$('previewButton').disabled = true; status(t('creating'));
   try {
     const output = document.createElement('canvas');
     // 元写真を過度に引き伸ばさず、長辺最大2400pxに書き出します。
@@ -151,12 +151,12 @@ $('previewButton').addEventListener('click', async () => {
     out.globalCompositeOperation = 'destination-in';
     out.drawImage(state.mask, 0, 0, output.width, output.height);
     resultBlob = await new Promise(resolve => output.toBlob(resolve, 'image/png'));
-    if (!resultBlob) throw new Error('PNGを作成できませんでした。別の写真でお試しください。');
+    if (!resultBlob) throw new Error(t('pngError'));
     if (resultUrl) URL.revokeObjectURL(resultUrl);
     resultUrl = URL.createObjectURL(resultBlob);
     $('resultImage').src = resultUrl; $('downloadLink').href = resultUrl;
-    $('resultSize').textContent = `${output.width} × ${output.height}px · 透過PNG`;
-    $('previewDialog').showModal(); status('切り抜き結果を確認して保存してください。');
+    $('resultSize').textContent = `${output.width} × ${output.height}px · ${t('transparentLabel')}`;
+    $('previewDialog').showModal(); status(t('created'));
   } catch (error) { status(error.message); }
   finally { $('previewButton').disabled = !state.photo || !state.mask; }
 });
@@ -169,8 +169,7 @@ $('saveButton').addEventListener('click', async () => {
       await navigator.share({ files: [file] });
     } else { $('downloadLink').click(); }
   } catch (error) {
-    if (error.name !== 'AbortError') { $('resultSize').textContent = '共有できませんでした。「PNGをダウンロード」または画像の長押しをお試しください。'; }
-  }
+if (error.name !== 'AbortError') { $('resultSize').textContent = t('shareError'); }
 });
 
 
