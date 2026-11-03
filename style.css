@@ -583,3 +583,19 @@ dialog .button {
     text-wrap: balance;
   }
 }
+
+
+/* Balanced descriptions in both languages */
+@media (max-width: 700px) {
+  html[lang="ja"] .intro > p:last-child {
+    max-width: 23em;
+    margin: 8px auto 0;
+    text-wrap: balance;
+  }
+
+  html[lang="en"] .intro > p:last-child {
+    max-width: 37ch;
+    margin: 8px auto 0;
+    text-wrap: balance;
+  }
+}
