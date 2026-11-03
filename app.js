@@ -66,7 +66,7 @@ $('canvasArea').style.aspectRatio = `${width}/${height}`;
     document.querySelectorAll('.shape-option').forEach(el => el.setAttribute('aria-pressed', String(el === button)));
     if (state.photo) { fit(); setEnabled(true); }
     render();
-  } catch { if (version === shapeVersion)status(t('shapeError')); }
+} catch { if (version === shapeVersion) status(t('shapeError')); }
 }
 for (const shape of window.PHOTO_SHAPES) {
   const button = document.createElement('button'); button.className = 'shape-option';
