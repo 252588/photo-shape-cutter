@@ -168,11 +168,11 @@ $('saveButton').addEventListener('click', async () => {
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({ files: [file] });
     } else { $('downloadLink').click(); }
+
   } catch (error) {
     if (error.name !== 'AbortError') { $('resultSize').textContent = t('shareError'); }
   }
 });
-
 
 
 /* POPPING DOODLES — Language switch */
