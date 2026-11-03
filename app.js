@@ -50,8 +50,12 @@ async function chooseShape(shape, button) {
     const mask = await loadImage(shape.src);
     if (version !== shapeVersion) return;
     state.shape = shape; state.mask = mask;
-    canvas.width = shape.width; canvas.height = shape.height;
-    $('canvasArea').style.aspectRatio = `${shape.width}/${shape.height}`;
+    
+const width = shape.width || mask.naturalWidth;
+const height = shape.height || mask.naturalHeight;
+canvas.width = width; canvas.height = height;
+$('canvasArea').style.aspectRatio = `${width}/${height}`;
+
     document.querySelectorAll('.shape-option').forEach(el => el.setAttribute('aria-pressed', String(el === button)));
     if (state.photo) { fit(); setEnabled(true); }
     render();
