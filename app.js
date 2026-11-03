@@ -181,8 +181,7 @@ const translations = {
   en: {
     localBadge: 'Photos stay on your device',
     headline: 'Give your memories a little shape.',
-    description: 'Turn your favorite photos into fun cutouts for journals and scrapbooks.',
-    editorLabel: 'Adjust photo position',
+    description: 'Turn your favorite photos into fun cutouts\nfor journals and scrapbooks.',
     transparentPng: 'Transparent PNG',
     canvasLabel: 'Drag to move your photo. Pinch to resize.',
     emptyTitle: 'Which memory will you shape?',
@@ -226,7 +225,7 @@ const translations = {
   ja: {
     localBadge: '写真は端末の中だけで処理',
     headline: '思い出を、好きなかたちに。',
-    description: 'お気に入りの写真を切り抜いて、手帳やスクラップブックをもっと楽しく。',
+    description: 'お気に入りの写真を切り抜いて、\n手帳やスクラップブックをもっと楽しく。',
     editorLabel: '写真の位置調整',
     transparentPng: '透過PNG',
     canvasLabel: '写真をドラッグで移動、2本指で拡大縮小',
