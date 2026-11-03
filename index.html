@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f7f5ee"><title>Photo Shape Cutter</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><a class="brand" href="./"><span class="brand-icon">✿</span> Photo Shape Cutter</a><span class="local-badge">● 写真は端末の中だけで処理</span></header>
+<main>
+<section class="intro"><p class="eyebrow">A LITTLE SHAPE, A LOT OF MEMORIES</p><h1>思い出を、<br class="mobile">好きなかたちに。</h1><p>旅のひとこまも、いつもの日常も。<br>切り抜いて、あなただけのスクラップブックへ。</p></section>
+<div class="workspace">
+<section class="editor-panel" aria-label="写真の位置調整"><div class="panel-top"><span>YOUR LITTLE CANVAS</span><span id="sizeLabel">透過 PNG</span></div><div class="canvas-area" id="canvasArea"><canvas id="editor" width="600" height="800" aria-label="写真の切り抜き位置。ドラッグで移動、2本指で拡大縮小"></canvas><div id="emptyState" class="empty-state"><span class="empty-flower">✿</span><strong>どんな思い出を切り抜く？</strong><p>写真を選んで、はじめましょう</p><label for="photoInput" class="button primary">＋ 写真を選ぶ</label><small>写真はアップロードされません</small></div></div><p class="gesture-hint">↔ ドラッグで移動 <span>·</span> 2本指でピンチして拡大・縮小</p></section>
+<aside class="controls"><section class="step"><div class="step-heading"><span class="number">01</span><h2>写真を選ぶ</h2></div><label for="photoInput" class="button upload">＋ <span id="uploadLabel">写真ライブラリから選ぶ</span></label><input id="photoInput" type="file" accept="image/*"><p class="fine" id="fileLabel">お気に入りの1枚を用意してください。</p></section>
+<section class="step"><div class="step-heading"><span class="number">02</span><h2>かたちを選ぶ</h2></div><div id="shapeList" class="shape-list"></div><p class="fine">まずは、やわらかな波型のフレームから。</p></section>
+<section class="step"><div class="step-heading"><span class="number">03</span><h2>ぴったりの位置に</h2><button class="text-button" id="reset" disabled>リセット</button></div><label class="range-label" for="zoom">拡大・縮小 <output id="zoomValue">100%</output></label><div class="range-row"><span>−</span><input id="zoom" type="range" min="1" max="5" step="0.01" value="1" disabled><span>＋</span></div><div class="nudge" aria-label="写真を少しずつ移動"><button data-dx="-10" data-dy="0" aria-label="写真を左へ" disabled>←</button><button data-dx="0" data-dy="-10" aria-label="写真を上へ" disabled>↑</button><button data-dx="0" data-dy="10" aria-label="写真を下へ" disabled>↓</button><button data-dx="10" data-dy="0" aria-label="写真を右へ" disabled>→</button></div></section>
+<button id="previewButton" class="button primary preview-button" disabled>切り抜きをプレビュー <span>↗</span></button><p class="export-note">背景透過PNG · 高さ 最大2,400px<br>GoodNotesやアルバムづくりに。</p></aside>
+</div><p id="status" role="status" aria-live="polite"></p><footer><span>MADE FOR YOUR MEMORIES</span><p>登録不要。写真は保存・送信されず、このブラウザ内で処理されます。</p></footer>
+</main>
+<dialog id="previewDialog"><div class="dialog-heading"><h2>切り抜きのできあがり</h2><button id="closePreview" aria-label="プレビューを閉じる">×</button></div><p class="fine">市松模様の部分は透明です。</p><div class="preview-checker"><img id="resultImage" alt="背景が透明な切り抜き結果"></div><p id="resultSize" class="fine"></p><button id="saveButton" class="button primary">PNGを保存・共有</button><a id="downloadLink" class="button upload" download="photo-shape.png">PNGをダウンロード</a><p class="fine">iPhoneでは共有メニューから「画像を保存」または「ファイルに保存」を選びます。うまくいかない場合は上の画像を長押ししてください。</p></dialog>
+<script src="shapes.js"></script><script src="app.js"></script>
+</body></html>
