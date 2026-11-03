@@ -172,3 +172,153 @@ $('saveButton').addEventListener('click', async () => {
     if (error.name !== 'AbortError') { $('resultSize').textContent = '共有できませんでした。「PNGをダウンロード」または画像の長押しをお試しください。'; }
   }
 });
+
+
+/* POPPING DOODLES — Language switch */
+
+const translations = {
+  en: {
+    localBadge: 'Photos stay on your device',
+    headline: 'Give your memories a little shape.',
+    description: 'Turn your favorite photos into fun cutouts for journals and scrapbooks.',
+    editorLabel: 'Adjust photo position',
+    transparentPng: 'Transparent PNG',
+    canvasLabel: 'Drag to move your photo. Pinch to resize.',
+    emptyTitle: 'Which memory will you shape?',
+    emptyDescription: 'Choose a photo to get started.',
+    choosePhoto: '+ Choose a photo',
+    privacyShort: 'Your photo is never uploaded.',
+    gestureHint: 'Drag to move · Pinch to resize',
+    stepPhoto: 'Choose a photo',
+    uploadLabel: 'Select from photo library',
+    changePhoto: 'Choose another photo',
+    filePrompt: 'Pick your favorite photo.',
+    stepShape: 'Pick a shape',
+    stepAdjust: 'Adjust your photo',
+    reset: 'Reset',
+    zoom: 'Zoom',
+    nudgeLabel: 'Move photo in small steps',
+    moveLeft: 'Move left',
+    moveUp: 'Move up',
+    moveDown: 'Move down',
+    moveRight: 'Move right',
+    preview: 'Preview your cutout',
+    exportNote: 'Transparent PNG · Up to 2,400px on the longest side. Perfect for journals and scrapbooks.',
+    privacyFooter: 'No sign-up needed. Photos are processed in your browser, not uploaded or stored on a server.',
+    previewTitle: 'Your cutout is ready!',
+    closePreview: 'Close preview',
+    checkerNote: 'The checkerboard area is transparent.',
+    resultAlt: 'Cutout with a transparent background',
+    saveShare: 'Save or share PNG',
+    download: 'Download PNG',
+    iphoneHint: 'On iPhone, choose Save Image or Save to Files from the share menu. You can also touch and hold the image above.',
+    loading: 'Loading your photo…',
+    loaded: 'Drag your photo to adjust its position.',
+    creating: 'Creating your transparent PNG…',
+    created: 'Check your cutout and save it.',
+    imageError: 'Could not load the image. Please try a JPEG or PNG.',
+    shapeError: 'Could not load the shape. Please try again.',
+    pngError: 'Could not create the PNG. Please try another photo.',
+    shareError: 'Could not share. Try Download PNG or touch and hold the image.',
+    transparentLabel: 'Transparent PNG'
+  },
+  ja: {
+    localBadge: '写真は端末の中だけで処理',
+    headline: '思い出を、好きなかたちに。',
+    description: 'お気に入りの写真を切り抜いて、手帳やスクラップブックをもっと楽しく。',
+    editorLabel: '写真の位置調整',
+    transparentPng: '透過PNG',
+    canvasLabel: '写真をドラッグで移動、2本指で拡大縮小',
+    emptyTitle: 'どんな思い出を切り抜く？',
+    emptyDescription: '写真を選んで、はじめましょう。',
+    choosePhoto: '＋ 写真を選ぶ',
+    privacyShort: '写真はアップロードされません。',
+    gestureHint: 'ドラッグで移動 · 2本指でピンチして拡大・縮小',
+    stepPhoto: '写真を選ぶ',
+    uploadLabel: '写真ライブラリから選ぶ',
+    changePhoto: '別の写真に変更する',
+    filePrompt: 'お気に入りの1枚を用意してください。',
+    stepShape: 'かたちを選ぶ',
+    stepAdjust: 'ぴったりの位置に',
+    reset: 'リセット',
+    zoom: '拡大・縮小',
+    nudgeLabel: '写真を少しずつ移動',
+    moveLeft: '写真を左へ',
+    moveUp: '写真を上へ',
+    moveDown: '写真を下へ',
+    moveRight: '写真を右へ',
+    preview: '切り抜きをプレビュー',
+    exportNote: '背景透過PNG · 長辺最大2,400px。手帳やアルバムづくりに。',
+    privacyFooter: '登録不要。写真は保存・送信されず、このブラウザ内で処理されます。',
+    previewTitle: '切り抜きのできあがり',
+    closePreview: 'プレビューを閉じる',
+    checkerNote: '市松模様の部分は透明です。',
+    resultAlt: '背景が透明な切り抜き結果',
+    saveShare: 'PNGを保存・共有',
+    download: 'PNGをダウンロード',
+    iphoneHint: 'iPhoneでは共有メニューから「画像を保存」または「ファイルに保存」を選びます。うまくいかない場合は画像を長押ししてください。',
+    loading: '写真を読み込んでいます…',
+    loaded: '写真をドラッグして位置を調整できます。',
+    creating: '透過PNGを作成しています…',
+    created: '切り抜き結果を確認して保存してください。',
+    imageError: '画像を読み込めませんでした。JPEGまたはPNGでお試しください。',
+    shapeError: 'シルエットを読み込めません。もう一度お試しください。',
+    pngError: 'PNGを作成できませんでした。別の写真でお試しください。',
+    shareError: '共有できませんでした。「PNGをダウンロード」または画像の長押しをお試しください。',
+    transparentLabel: '透過PNG'
+  }
+};
+
+let currentLanguage = 'en';
+
+function t(key) {
+  return translations[currentLanguage][key] || key;
+}
+
+function setLanguage(language) {
+  currentLanguage = language;
+  document.documentElement.lang = language;
+  try {
+    localStorage.setItem('photoShapeLanguage', language);
+  } catch (_) {}
+
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.dataset.i18n;
+
+    if (key === 'uploadLabel' && state.photo) {
+      element.textContent = t('changePhoto');
+    } else if (key === 'filePrompt' && state.photo) {
+      // Keep the selected file name.
+    } else {
+      element.textContent = t(key);
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+    element.setAttribute('aria-label', t(element.dataset.i18nAriaLabel));
+  });
+
+  document.querySelectorAll('[data-i18n-alt]').forEach(element => {
+    element.alt = t(element.dataset.i18nAlt);
+  });
+
+  $('langEN').setAttribute('aria-pressed', String(language === 'en'));
+  $('langJA').setAttribute('aria-pressed', String(language === 'ja'));
+
+  if (resultBlob) {
+    const size = $('resultSize').textContent;
+    $('resultSize').textContent = size.replace(
+      /透過PNG|Transparent PNG/g,
+      t('transparentLabel')
+    );
+  }
+}
+
+$('langEN').addEventListener('click', () => setLanguage('en'));
+$('langJA').addEventListener('click', () => setLanguage('ja'));
+
+let savedLanguage = 'en';
+try {
+  savedLanguage = localStorage.getItem('photoShapeLanguage') || 'en';
+} catch (_) {}
+setLanguage(savedLanguage === 'ja' ? 'ja' : 'en');
