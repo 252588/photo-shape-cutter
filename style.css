@@ -422,18 +422,30 @@ dialog::backdrop {
 }
 
 .dialog-heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--paper);
+  gap: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .dialog-heading h2 {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 20px;
 }
 
 .dialog-heading button {
-  border: 0;
-  background: none;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
   font-size: 28px;
   color: var(--ink);
 }
